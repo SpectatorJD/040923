@@ -5,6 +5,8 @@ import com.example3.model.Avatar;
 import com.example3.model.Student;
 import com.example3.repository.AvatarRepository;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,8 +23,10 @@ import java.util.UUID;
 @Service
 @Transactional
 public class AvatarServiceImpl implements AvatarService {
+
     private final AvatarRepository avatarRepository;
     private final StudentService studentService;
+    Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
 
     public AvatarServiceImpl(AvatarRepository avatarRepository, StudentService studentService) {
         this.avatarRepository = avatarRepository;
@@ -31,6 +35,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Avatar uploadAvatar(Long studentId, MultipartFile file) throws IOException {
+        logger.debug("Was invoked method for to download avatar");
         Student student = studentService.findStudent(studentId);
         Path pathFile = Path.of("./avatar", UUID.randomUUID() + "." + getExtension(file.getOriginalFilename()));
         Files.createDirectories(pathFile.getParent());
@@ -55,12 +60,14 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Avatar getAvatarById(Long avatarId) {
+        logger.error("Was invoked method for to get avatar by id" + avatarId);
         return avatarRepository.findById(avatarId)
                 .orElseThrow(()-> new AvatarNotFoundException("Avatar not found"));
     }
 
     @Override
     public Collection<Avatar> getAllAvatar(Integer pageNumber, Integer pageSize) {
+        logger.info("Was invoked method for to get all avatars");
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         return avatarRepository.findAll(pageable).getContent();
     }
