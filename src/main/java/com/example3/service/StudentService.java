@@ -20,4 +20,6 @@ public interface StudentService {
     Integer getStudentCount();
     StudentAge getAverageAge();
     Collection<Student> getTopFiveStudent();
+
+    Collection<Student> getAllStudents();
 }

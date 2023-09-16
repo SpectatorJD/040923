@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/student")
@@ -62,5 +63,9 @@ public class StudentController  {
     @GetMapping("/top-five")
     public Collection<Student> getTopFiveStudent(){
         return studentService.getTopFiveStudent();
+    }
+    @GetMapping("/geAllStudents")
+    public Collection<Student> getAllStudents(){
+        return studentService.getAllStudents();
     }
 }
