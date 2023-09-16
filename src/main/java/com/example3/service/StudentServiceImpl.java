@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService{
@@ -69,5 +70,9 @@ public class StudentServiceImpl implements StudentService{
     public Collection<Student> getTopFiveStudent() {
         logger.info("Was invoked method for to get top five students");
         return studentRepository.getTopFiveStudent();
+    }
+    @Override
+    public Collection<Student> getAllStudents(){
+        return studentRepository.findAll();
     }
 }
